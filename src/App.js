@@ -28,10 +28,14 @@ function App() {
     return <FastFoodList fastFoodItems={fastFoodItems} />;
   };
 
+  const filterItems = (categoryID) => {
+    fetchData(categoryID);
+  };
+
   return (
     <div className="wrapper bg-faded-dark">
       <Header />
-      <CategoryList />
+      <CategoryList filterItems={filterItems} />
       <div className="container mt-4">{renderContent()}</div>
     </div>
   );
