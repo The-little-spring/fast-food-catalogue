@@ -1,3 +1,4 @@
+import "./fastFood.css";
 import { HiShoppingCart } from "react-icons/hi";
 
 const FastFood = ({ name, price, ingredients, imageUrl }) => {
@@ -6,7 +7,9 @@ const FastFood = ({ name, price, ingredients, imageUrl }) => {
       <span className="badge badge-end badge-shadow bg-success fs-md fw-medium">
         قیمت: {price.toLocaleString()} تومان
       </span>
-      <img className="card-img-top" src={imageUrl} alt="fastfood"/>
+      <div className="card__placeholder">
+        <img className="card-img-top" src={imageUrl} alt="fastfood" />
+      </div>
 
       <div className="card-body text-center pt-3 pb-4 d-flex flex-column">
         <h5 className="mb-2">{name}</h5>
