@@ -10,13 +10,11 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [fastFoodItems, setFastFoods] = useState([]);
 
-  const fetchData = () => {
+  const fetchData = async (categoryID = null) => {
     setLoading(true);
-    const response = async (categoryID = null) => {
-      await axios.get(
-        `/FastFood/list/${categoryID ? "?categoryID=" + categoryID : ""}`
-      );
-    };
+    const response = await axios.get(
+      `/FastFood/list/${categoryID ? "?categoryID=" + categoryID : ""}`
+    );
     setLoading(false);
     setFastFoods(response.data);
   };
