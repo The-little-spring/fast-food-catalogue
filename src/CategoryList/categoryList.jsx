@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "../axios";
 import Loading from "../Header/Loading/loading";
 
-const CategoryList = ({ filterItems }) => {
+const CategoryList = ({ filterItems, children }) => {
   const [loading, setloading] = useState("true");
   const [categories, setcategories] = useState([]);
 
@@ -20,24 +20,27 @@ const CategoryList = ({ filterItems }) => {
       return <Loading theme={"dark-blue"} />;
     }
     return (
-      <ul className="nav">
-        <li className="nav-item" onClick={() => filterItems()}>
-          <a className="nav-link" href="#.">
-            همه فست فودها
-          </a>
-        </li>
-        {categories.map((category) => (
-          <li
-            className="nav-item"
-            key={category.id}
-            onClick={() => filterItems(category.id)}
-          >
+      <div className="ps-3 w-100 d-flex align-items-center justify-content-between gap-5">
+        <ul className="nav">
+          <li className="nav-item" onClick={() => filterItems()}>
             <a className="nav-link" href="#.">
-              {category.name}
+              همه فست فودها
             </a>
           </li>
-        ))}
-      </ul>
+          {categories.map((category) => (
+            <li
+              className="nav-item"
+              key={category.id}
+              onClick={() => filterItems(category.id)}
+            >
+              <a className="nav-link" href="#.">
+                {category.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+        {children}
+      </div>
     );
   };
 

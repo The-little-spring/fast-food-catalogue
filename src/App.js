@@ -5,6 +5,8 @@ import Header from "./Header/header";
 import axios from "./axios";
 import Loading from "./Header/Loading/loading";
 import FastFoodList from "./FastFoodList/fastFoodList";
+import SearchBar from "./SearchBar/searchBar";
+import notFound from "./Header/assests/images/404.png";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -23,8 +25,30 @@ function App() {
     fetchData();
   }, []);
 
+  const searchItems = async (term) => {
+    setLoading(true);
+    const response = await axios.get(
+      `/FastFood/search/${term ? "?term=" + term : ""}`
+    );
+    setLoading(false);
+    setFastFoods(response.data);
+  };
+
   const renderContent = () => {
     if (loading) return <Loading theme={"dark"} />;
+    if (fastFoodItems.length === 0)
+      return (
+        <>
+          <div className="alert alert-warning text-center">
+            برای کلیدواژه فوق، آیتمی یافت نشد.
+          </div>
+          <img
+            className="mx-auto d-block mt-5"
+            src={notFound}
+            alt="not-found"
+          ></img>
+        </>
+      );
     return <FastFoodList fastFoodItems={fastFoodItems} />;
   };
 
@@ -35,7 +59,9 @@ function App() {
   return (
     <div className="wrapper bg-faded-dark">
       <Header />
-      <CategoryList filterItems={filterItems} />
+      <CategoryList filterItems={filterItems}>
+        <SearchBar searchItems={searchItems} />
+      </CategoryList>
       <div className="container mt-4">{renderContent()}</div>
     </div>
   );
